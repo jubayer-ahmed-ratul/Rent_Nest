@@ -5,13 +5,23 @@ import sendResponse from "../utils/sendResponse";
 import { authService } from "./auth.service";
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await authService.loginUser(req.body);
+  const { accessToken, refreshToken } = await authService.loginUser(req.body);
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "User logged in successfully",
-    data: result,
+    data: { accessToken, refreshToken },
   });
 });
 
