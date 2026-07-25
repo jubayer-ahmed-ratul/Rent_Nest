@@ -7,6 +7,6 @@ export interface registerPayload {
   name: string;
   email: string;
   password: string;
-  role: "TENANT" | "LANDLORD";
+  role: "TENANT" | "LANDLORD" | "ADMIN";
   profileImage?: string;
 }

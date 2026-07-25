@@ -51,8 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Category: 'Category',
   Landlord: 'Landlord',
   Profile: 'Profile',
+  Property: 'Property',
   Tenant: 'Tenant'
 } as const
 
@@ -70,6 +72,17 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const LandlordScalarFieldEnum = {
@@ -102,6 +115,28 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const PropertyScalarFieldEnum = {
+  id: 'id',
+  landlordId: 'landlordId',
+  categoryId: 'categoryId',
+  title: 'title',
+  description: 'description',
+  location: 'location',
+  price: 'price',
+  bedrooms: 'bedrooms',
+  bathrooms: 'bathrooms',
+  area: 'area',
+  images: 'images',
+  amenities: 'amenities',
+  isAvailable: 'isAvailable',
+  isDeleted: 'isDeleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
 
 
 export const TenantScalarFieldEnum = {

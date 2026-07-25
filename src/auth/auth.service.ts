@@ -11,10 +11,7 @@ const registerUser = async (payload: registerPayload) => {
     const isExist = await prisma.landlord.findUnique({ where: { email } });
     if (isExist) throw new Error("User with this email already exists");
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-      Number(config.bcrypt_salt_round),
-    );
+    const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_round));
 
     const landlord = await prisma.landlord.create({
       data: { name, email, password: hashedPassword, profileImage },
@@ -24,22 +21,26 @@ const registerUser = async (payload: registerPayload) => {
     return landlord;
   }
 
-  // default: TENANT
+  // TENANT or ADMIN — both go into tenant table
   const isExist = await prisma.tenant.findUnique({ where: { email } });
   if (isExist) throw new Error("User with this email already exists");
 
-  const hashedPassword = await bcrypt.hash(
-    password,
-    Number(config.bcrypt_salt_round),
-  );
+  const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_round));
 
   const tenant = await prisma.tenant.create({
-    data: { name, email, password: hashedPassword },
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role: role === "ADMIN" ? "ADMIN" : "TENANT",
+    },
   });
 
-  await prisma.profile.create({
-    data: { tenantId: tenant.id, fullName: name, profileImage },
-  });
+  if (role !== "ADMIN") {
+    await prisma.profile.create({
+      data: { tenantId: tenant.id, fullName: name, profileImage },
+    });
+  }
 
   const result = await prisma.tenant.findUnique({
     where: { id: tenant.id },

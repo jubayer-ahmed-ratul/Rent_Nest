@@ -4,6 +4,8 @@ import config from "./config";
 import cookieParser from "cookie-parser";
 import { tenantRoutes } from "./modules/tenant/tenant.route";
 import { landlordRoutes } from "./modules/landlord/landlord.route";
+import { propertyRoutes } from "./modules/property/property.route";
+import { categoryRoutes } from "./modules/category/category.route";
 import { authRoutes } from "./auth/auth.route";
 
 const app: Application = express();
@@ -24,8 +26,10 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 // routes
+app.use("/api/auth", authRoutes);
 app.use("/api/tenants", tenantRoutes);
 app.use("/api/landlords", landlordRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/properties", propertyRoutes);
+app.use("/api/categories", categoryRoutes);
 
 export default app;

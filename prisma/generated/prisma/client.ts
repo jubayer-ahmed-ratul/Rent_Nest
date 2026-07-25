@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Landlords
- * const landlords = await prisma.landlord.findMany()
+ * // Fetch zero or more Categories
+ * const categories = await prisma.category.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -41,6 +41,11 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
 /**
  * Model Landlord
  * 
@@ -51,6 +56,11 @@ export type Landlord = Prisma.LandlordModel
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model Property
+ * 
+ */
+export type Property = Prisma.PropertyModel
 /**
  * Model Tenant
  * 

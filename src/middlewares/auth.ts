@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import config from "../config";
-import { Role } from "../../prisma/generated/prisma";
+import { Role } from "../../prisma/generated/prisma/enums";
 import { jwtHelpers } from "../utils/jwt";
 
-// extend Express Request to carry user info
 declare global {
   namespace Express {
     interface Request {

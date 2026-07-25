@@ -5,12 +5,14 @@ import { landlordController } from "./landlord.controller";
 
 const router = Router();
 
+// property management routes (must be before /:id)
+router.post("/properties", auth(Role.LANDLORD), landlordController.createProperty);
+router.put("/properties/:id", auth(Role.LANDLORD), landlordController.updateProperty);
+router.delete("/properties/:id", auth(Role.LANDLORD), landlordController.deleteProperty);
+
+// profile routes
 router.post("/register", landlordController.createLandlord);
 router.get("/:id", landlordController.getLandlordProfile);
-router.patch(
-  "/:id",
-  auth(Role.LANDLORD, Role.ADMIN),
-  landlordController.updateLandlordProfile,
-);
+router.patch("/:id", auth(Role.LANDLORD, Role.ADMIN), landlordController.updateLandlordProfile);
 
 export const landlordRoutes = router;

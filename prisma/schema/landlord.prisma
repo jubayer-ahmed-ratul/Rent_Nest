@@ -1,18 +1,20 @@
 model Landlord {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
-  email        String   @unique
+  email        String     @unique
   password     String
 
   phone        String?
   address      String?
   profileImage String?
 
-  role         Role     @default(LANDLORD)
-  status       Status   @default(ACTIVE)
+  role         Role       @default(LANDLORD)
+  status       Status     @default(ACTIVE)
 
-  isDeleted    Boolean  @default(false)
+  isDeleted    Boolean    @default(false)
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  properties   Property[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
