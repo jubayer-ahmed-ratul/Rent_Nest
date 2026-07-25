@@ -1,0 +1,14 @@
+model Profile {
+  id           String   @id @default(cuid())
+
+  tenantId     String   @unique
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  fullName     String
+  phone        String?
+  address      String?
+  profileImage String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

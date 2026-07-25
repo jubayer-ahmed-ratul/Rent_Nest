@@ -1,5 +1,7 @@
 import app from "./app";
-const PORT=process.env.PORT||5000;
+import "dotenv/config"
+import config from "./config";
+const PORT=config.port;
 async function main() {
     try {
         app.listen(PORT,()=>{
