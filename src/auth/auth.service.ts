@@ -33,4 +33,19 @@ const loginUser = async (payload: loginPayload) => {
   return { accessToken, refreshToken };
 };
 
-export const authService = { loginUser };
+const getMe = async (id: string) => {
+  const user = await prisma.tenant.findUnique({
+    where: { id },
+    omit: { password: true },
+    include: { profile: true },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  return user;
+};
+
+export const authService = {
+  loginUser,
+  getMe,
+};
