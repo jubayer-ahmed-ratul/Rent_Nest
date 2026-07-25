@@ -485,18 +485,6 @@ export type TenantUpdateOneRequiredWithoutProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutProfileInput, Prisma.TenantUpdateWithoutProfileInput>, Prisma.TenantUncheckedUpdateWithoutProfileInput>
 }
 
-export type EnumRoleFieldUpdateOperationsInput = {
-  set?: $Enums.Role
-}
-
-export type EnumStatusFieldUpdateOperationsInput = {
-  set?: $Enums.Status
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type TenantCreateWithoutProfileInput = {
   id?: string
   name: string

@@ -378,18 +378,6 @@ export type ProfileNullableScalarRelationFilter = {
   isNot?: Prisma.ProfileWhereInput | null
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type ProfileCreateNestedOneWithoutTenantInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutTenantInput, Prisma.ProfileUncheckedCreateWithoutTenantInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutTenantInput

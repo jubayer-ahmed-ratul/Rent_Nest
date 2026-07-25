@@ -4,3 +4,10 @@ export interface createLandlordPayload {
   password: string;
   profileImage?: string;
 }
+
+export interface updateLandlordPayload {
+  name?: string;
+  phone?: string;
+  address?: string;
+  profileImage?: string;
+}

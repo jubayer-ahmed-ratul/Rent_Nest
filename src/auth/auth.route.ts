@@ -5,6 +5,7 @@ import { authController } from "./auth.controller";
 
 const router = Router();
 
+router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
 router.get("/me", auth(Role.TENANT, Role.LANDLORD, Role.ADMIN), authController.getMe);
 

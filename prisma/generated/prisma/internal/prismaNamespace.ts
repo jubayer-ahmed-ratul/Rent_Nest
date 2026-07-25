@@ -397,6 +397,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  Landlord: 'Landlord',
   Profile: 'Profile',
   Tenant: 'Tenant'
 } as const
@@ -414,10 +415,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "profile" | "tenant"
+    modelProps: "landlord" | "profile" | "tenant"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    Landlord: {
+      payload: Prisma.$LandlordPayload<ExtArgs>
+      fields: Prisma.LandlordFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LandlordFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LandlordFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        findFirst: {
+          args: Prisma.LandlordFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LandlordFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        findMany: {
+          args: Prisma.LandlordFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>[]
+        }
+        create: {
+          args: Prisma.LandlordCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        createMany: {
+          args: Prisma.LandlordCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LandlordCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>[]
+        }
+        delete: {
+          args: Prisma.LandlordDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        update: {
+          args: Prisma.LandlordUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        deleteMany: {
+          args: Prisma.LandlordDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LandlordUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LandlordUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>[]
+        }
+        upsert: {
+          args: Prisma.LandlordUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LandlordPayload>
+        }
+        aggregate: {
+          args: Prisma.LandlordAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLandlord>
+        }
+        groupBy: {
+          args: Prisma.LandlordGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandlordGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LandlordCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LandlordCountAggregateOutputType> | number
+        }
+      }
+    }
     Profile: {
       payload: Prisma.$ProfilePayload<ExtArgs>
       fields: Prisma.ProfileFieldRefs
@@ -605,6 +680,24 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const LandlordScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  phone: 'phone',
+  address: 'address',
+  profileImage: 'profileImage',
+  role: 'role',
+  status: 'status',
+  isDeleted: 'isDeleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LandlordScalarFieldEnum = (typeof LandlordScalarFieldEnum)[keyof typeof LandlordScalarFieldEnum]
+
+
 export const ProfileScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
@@ -682,20 +775,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
  * Reference to a field of type 'Role'
  */
 export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -727,6 +806,20 @@ export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -894,6 +987,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
  */
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
+  landlord?: Prisma.LandlordOmit
   profile?: Prisma.ProfileOmit
   tenant?: Prisma.TenantOmit
 }
