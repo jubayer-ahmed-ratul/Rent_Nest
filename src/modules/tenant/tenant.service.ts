@@ -47,6 +47,17 @@ const registerUserIntoDB = async (payload: registerUserPayload) => {
   return user;
 };
 
+const getAllUsersFromDB = async () => {
+  const users = await prisma.tenant.findMany({
+    where: { isDeleted: false },
+    omit: { password: true },
+    include: { profile: true },
+  });
+
+  return users;
+};
+
 export const tenantService = {
   registerUserIntoDB,
+  getAllUsersFromDB,
 };
