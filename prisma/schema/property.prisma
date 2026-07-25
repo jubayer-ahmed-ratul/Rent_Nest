@@ -1,11 +1,11 @@
 model Property {
-  id           String   @id @default(cuid())
+  id           String          @id @default(cuid())
 
   landlordId   String
-  landlord     Landlord @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+  landlord     Landlord        @relation(fields: [landlordId], references: [id], onDelete: Cascade)
 
   categoryId   String
-  category     Category @relation(fields: [categoryId], references: [id])
+  category     Category        @relation(fields: [categoryId], references: [id])
 
   title        String
   description  String
@@ -17,9 +17,11 @@ model Property {
   images       String[]
   amenities    String[]
 
-  isAvailable  Boolean  @default(true)
-  isDeleted    Boolean  @default(false)
+  isAvailable  Boolean         @default(true)
+  isDeleted    Boolean         @default(false)
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  rentalRequests RentalRequest[]
+
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
 }
