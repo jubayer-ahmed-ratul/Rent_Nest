@@ -18,6 +18,8 @@ model RentalRequest {
   status     RentalStatus @default(PENDING)
   message    String?
 
+  payment    Payment?
+
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 }

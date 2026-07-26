@@ -1,0 +1,31 @@
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+}
+
+model Payment {
+  id              String          @id @default(cuid())
+
+  rentalRequestId String          @unique
+  rentalRequest   RentalRequest   @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
+
+  tenantId        String
+  tenant          Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  amount          Float
+  currency        String          @default("usd")
+  provider        PaymentProvider @default(STRIPE)
+  transactionId   String?
+  status          PaymentStatus   @default(PENDING)
+
+  paidAt          DateTime?
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}

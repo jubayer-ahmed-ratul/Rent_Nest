@@ -38,9 +38,26 @@ const updateUserStatusIntoDB = async (id: string, role: string, payload: updateU
   });
 };
 
-const getAllPropertiesFromDB = async () => {};
+const getAllPropertiesFromDB = async () => {
+  return await prisma.property.findMany({
+    where: { isDeleted: false },
+    include: {
+      category: true,
+      landlord: { omit: { password: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
 
-const getAllRentalRequestsFromDB = async () => {};
+const getAllRentalRequestsFromDB = async () => {
+  return await prisma.rentalRequest.findMany({
+    include: {
+      tenant: { omit: { password: true } },
+      property: { include: { category: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
 
 export const adminService = {
   getAllUsersFromDB,
