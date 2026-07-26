@@ -18,4 +18,5 @@ model Tenant {
 
   profile        Profile?
   rentalRequests RentalRequest[]
+  reviews        Review[]
 }
