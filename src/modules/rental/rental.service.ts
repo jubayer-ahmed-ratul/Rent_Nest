@@ -56,7 +56,22 @@ const getLandlordRentalRequestsFromDB = async (landlordId: string) => {
   });
 };
 
-const updateRentalStatusIntoDB = async (landlordId: string, requestId: string, payload: updateRentalStatusPayload) => {};
+const updateRentalStatusIntoDB = async (landlordId: string, requestId: string, payload: updateRentalStatusPayload) => {
+  const request = await prisma.rentalRequest.findUnique({
+    where: { id: requestId },
+    include: { property: true },
+  });
+
+  if (!request) throw new Error("Rental request not found");
+  if (request.property.landlordId !== landlordId) throw new Error("You are not authorized to update this request");
+  if (request.status !== "PENDING") throw new Error("Only pending requests can be approved or rejected");
+
+  return await prisma.rentalRequest.update({
+    where: { id: requestId },
+    data: { status: payload.status },
+    include: { property: true, tenant: { omit: { password: true } } },
+  });
+};
 
 export const rentalService = {
   createRentalRequestIntoDB,
