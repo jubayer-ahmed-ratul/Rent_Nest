@@ -55,6 +55,7 @@ export const ModelName = {
   Landlord: 'Landlord',
   Profile: 'Profile',
   Property: 'Property',
+  RentalRequest: 'RentalRequest',
   Tenant: 'Tenant'
 } as const
 
@@ -137,6 +138,19 @@ export const PropertyScalarFieldEnum = {
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
+
+
+export const RentalRequestScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  propertyId: 'propertyId',
+  status: 'status',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RentalRequestScalarFieldEnum = (typeof RentalRequestScalarFieldEnum)[keyof typeof RentalRequestScalarFieldEnum]
 
 
 export const TenantScalarFieldEnum = {

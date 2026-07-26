@@ -38,6 +38,11 @@ export type Profile = Prisma.ProfileModel
  */
 export type Property = Prisma.PropertyModel
 /**
+ * Model RentalRequest
+ * 
+ */
+export type RentalRequest = Prisma.RentalRequestModel
+/**
  * Model Tenant
  * 
  */
