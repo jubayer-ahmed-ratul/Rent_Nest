@@ -16,7 +16,27 @@ const getAllUsersFromDB = async () => {
   return { tenants, landlords };
 };
 
-const updateUserStatusIntoDB = async (id: string, role: string, payload: updateUserStatusPayload) => {};
+const updateUserStatusIntoDB = async (id: string, role: string, payload: updateUserStatusPayload) => {
+  if (role === "LANDLORD") {
+    const landlord = await prisma.landlord.findUnique({ where: { id } });
+    if (!landlord) throw new Error("Landlord not found");
+
+    return await prisma.landlord.update({
+      where: { id },
+      data: { status: payload.status },
+      omit: { password: true },
+    });
+  }
+
+  const tenant = await prisma.tenant.findUnique({ where: { id } });
+  if (!tenant) throw new Error("User not found");
+
+  return await prisma.tenant.update({
+    where: { id },
+    data: { status: payload.status },
+    omit: { password: true },
+  });
+};
 
 const getAllPropertiesFromDB = async () => {};
 
