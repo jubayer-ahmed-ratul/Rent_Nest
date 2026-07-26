@@ -4,5 +4,4 @@ export interface createPaymentPayload {
 
 export interface confirmPaymentPayload {
   transactionId: string;
-  rentalRequestId: string;
 }

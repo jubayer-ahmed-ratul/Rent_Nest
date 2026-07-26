@@ -96,6 +96,21 @@ const deletePropertyFromDB = async (landlordId: string, propertyId: string) => {
   });
 };
 
+const togglePropertyAvailabilityIntoDB = async (landlordId: string, propertyId: string) => {
+  const property = await prisma.property.findUnique({
+    where: { id: propertyId, isDeleted: false },
+  });
+
+  if (!property) throw new Error("Property not found");
+  if (property.landlordId !== landlordId) throw new Error("You are not authorized to update this property");
+
+  return await prisma.property.update({
+    where: { id: propertyId },
+    data: { isAvailable: !property.isAvailable },
+    include: { category: true },
+  });
+};
+
 export const landlordService = {
   createLandlordIntoDB,
   getLandlordProfileFromDB,
@@ -103,4 +118,5 @@ export const landlordService = {
   createPropertyIntoDB,
   updatePropertyIntoDB,
   deletePropertyFromDB,
+  togglePropertyAvailabilityIntoDB,
 };

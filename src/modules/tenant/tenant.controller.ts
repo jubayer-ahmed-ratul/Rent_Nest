@@ -26,7 +26,19 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
+  const result = await tenantService.updateMyProfileIntoDB(req.user!.id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Profile updated successfully",
+    data: result,
+  });
+});
+
 export const tenantController = {
   registerUser,
   getAllUsers,
+  updateMyProfile,
 };

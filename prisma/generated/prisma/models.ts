@@ -10,6 +10,7 @@
  */
 export type * from './models/Category'
 export type * from './models/Landlord'
+export type * from './models/Payment'
 export type * from './models/Profile'
 export type * from './models/Property'
 export type * from './models/RentalRequest'

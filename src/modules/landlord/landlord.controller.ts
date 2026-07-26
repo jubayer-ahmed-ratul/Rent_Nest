@@ -84,6 +84,20 @@ const deleteProperty = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const togglePropertyAvailability = catchAsync(async (req: Request, res: Response) => {
+  const result = await landlordService.togglePropertyAvailabilityIntoDB(
+    req.user!.id,
+    req.params.id as string,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: `Property availability updated to ${result.isAvailable ? "available" : "unavailable"}`,
+    data: result,
+  });
+});
+
 export const landlordController = {
   createLandlord,
   getLandlordProfile,
@@ -91,4 +105,5 @@ export const landlordController = {
   createProperty,
   updateProperty,
   deleteProperty,
+  togglePropertyAvailability,
 };

@@ -1,63 +1,51 @@
 import bcrypt from "bcryptjs";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
-import { registerUserPayload } from "./tenant.interface";
+import { registerUserPayload, updateTenantProfilePayload } from "./tenant.interface";
 
 const registerUserIntoDB = async (payload: registerUserPayload) => {
   const { name, email, password, profileImage } = payload;
 
-  const isUserExist = await prisma.tenant.findUnique({
-    where: { email },
-  });
+  const isUserExist = await prisma.tenant.findUnique({ where: { email } });
+  if (isUserExist) throw new Error("User with this email already exists");
 
-  if (isUserExist) {
-    throw new Error("User with this email already exists");
-  }
+  const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_round));
 
-  // hash password
-  const hashedPassword = await bcrypt.hash(
-    password,
-    Number(config.bcrypt_salt_round),
-  );
-
-  // create user
   const createdUser = await prisma.tenant.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
+    data: { name, email, password: hashedPassword },
   });
 
-  // create profile
   await prisma.profile.create({
-    data: {
-      tenantId: createdUser.id,
-      fullName: name,
-      profileImage,
-    },
+    data: { tenantId: createdUser.id, fullName: name, profileImage },
   });
 
-  const user = await prisma.tenant.findUnique({
+  return await prisma.tenant.findUnique({
     where: { id: createdUser.id },
     omit: { password: true },
     include: { profile: true },
   });
-
-  return user;
 };
 
 const getAllUsersFromDB = async () => {
-  const users = await prisma.tenant.findMany({
+  return await prisma.tenant.findMany({
     where: { isDeleted: false },
     omit: { password: true },
     include: { profile: true },
   });
+};
 
-  return users;
+const updateMyProfileIntoDB = async (tenantId: string, payload: updateTenantProfilePayload) => {
+  const profile = await prisma.profile.findUnique({ where: { tenantId } });
+  if (!profile) throw new Error("Profile not found");
+
+  return await prisma.profile.update({
+    where: { tenantId },
+    data: payload,
+  });
 };
 
 export const tenantService = {
   registerUserIntoDB,
   getAllUsersFromDB,
+  updateMyProfileIntoDB,
 };

@@ -4,3 +4,10 @@ export interface registerUserPayload {
   password: string;
   profileImage?: string;
 }
+
+export interface updateTenantProfilePayload {
+  fullName?: string;
+  phone?: string;
+  address?: string;
+  profileImage?: string;
+}
