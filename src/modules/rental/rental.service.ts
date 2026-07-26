@@ -31,9 +31,30 @@ const getMyRentalRequestsFromDB = async (tenantId: string) => {
   });
 };
 
-const getRentalRequestByIdFromDB = async (id: string, userId: string) => {};
+const getRentalRequestByIdFromDB = async (id: string, userId: string) => {
+  const request = await prisma.rentalRequest.findUnique({
+    where: { id },
+    include: {
+      property: { include: { category: true } },
+      tenant: { omit: { password: true } },
+    },
+  });
 
-const getLandlordRentalRequestsFromDB = async (landlordId: string) => {};
+  if (!request) throw new Error("Rental request not found");
+
+  return request;
+};
+
+const getLandlordRentalRequestsFromDB = async (landlordId: string) => {
+  return await prisma.rentalRequest.findMany({
+    where: { property: { landlordId } },
+    include: {
+      property: true,
+      tenant: { omit: { password: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+};
 
 const updateRentalStatusIntoDB = async (landlordId: string, requestId: string, payload: updateRentalStatusPayload) => {};
 
