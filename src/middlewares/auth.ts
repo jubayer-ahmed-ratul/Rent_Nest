@@ -26,8 +26,8 @@ const auth = (...roles: Role[]) => {
       if (!token) {
         return res.status(httpStatus.UNAUTHORIZED).json({
           success: false,
-          statusCode: httpStatus.UNAUTHORIZED,
           message: "You are not authorized",
+          errorDetails: "No token provided",
         });
       }
 
@@ -45,8 +45,8 @@ const auth = (...roles: Role[]) => {
       if (roles.length && !roles.includes(req.user.role)) {
         return res.status(httpStatus.FORBIDDEN).json({
           success: false,
-          statusCode: httpStatus.FORBIDDEN,
           message: "You do not have permission to access this resource",
+          errorDetails: "Insufficient role permissions",
         });
       }
 
@@ -54,8 +54,8 @@ const auth = (...roles: Role[]) => {
     } catch {
       return res.status(httpStatus.UNAUTHORIZED).json({
         success: false,
-        statusCode: httpStatus.UNAUTHORIZED,
         message: "Invalid or expired token",
+        errorDetails: "Token verification failed",
       });
     }
   };
